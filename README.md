@@ -1,6 +1,6 @@
 # Discord Bot for MMOGA Weekend Sales
 
-Mit diesem Python Skript können die Weekend Deals von mmoga.de ausgelesen und in deinen Discord Server gepostet werden.
+With this Python script the Weekend Deals can be read from mmoga.de and posted to your discord server. The Python script must then be executed once a week, e.g. by a cron job.
 
 ### Result
 Sales come from mmoga.de
