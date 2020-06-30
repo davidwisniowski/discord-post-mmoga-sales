@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN') # bot client token
 GUILD = os.getenv('DISCORD_GUILD') # discord server name
-CHANNEL = os.getenv('DISCORD_CHANNEL') # target channel id
+CHANNEL = int(os.getenv('DISCORD_CHANNEL')) # target channel id
 URL = os.getenv('MMOGA_LINK') # mmoga as sales website
 
 client = discord.Client()
@@ -20,7 +20,7 @@ def get_offers():
     weekend_offers = soup.findAll(True, { 'class':'container', 'class' : 'preorderCont' })
     #print(weekend_offers, end='\n'*2)
 
-    message = "**MMOGA: Aktuelle Weekend Deals**\n\n"
+    message = "**MMOGA: Neue Top Deals**\n\n"
 
     for offer in weekend_offers:
         
@@ -61,11 +61,10 @@ def build_message(title, newPrice, oldPrice, link):
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
 
-    guild = discord.utils.get(client.guilds, name=GUILD)
+    guild = discord.utils.get(client.guilds, name=GUILD)    
     channel = guild.get_channel(CHANNEL)
-    message = get_offers()
-    print(message)
-    ##await channel.send(message)
+    message = get_offers()    
+    await channel.send(message)
     os._exit(os.EX_OK)
 
 client.run(TOKEN)
