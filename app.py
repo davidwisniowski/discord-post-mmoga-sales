@@ -10,6 +10,7 @@ TOKEN = os.getenv('DISCORD_TOKEN') # bot client token
 GUILD = os.getenv('DISCORD_GUILD') # discord server name
 CHANNEL = int(os.getenv('DISCORD_CHANNEL')) # target channel id
 URL = os.getenv('MMOGA_LINK') # mmoga as sales website
+FILE_NAME = 'offers.txt'
 
 client = discord.Client()
 
@@ -63,8 +64,19 @@ async def on_ready():
 
     guild = discord.utils.get(client.guilds, name=GUILD)    
     channel = guild.get_channel(CHANNEL)
-    message = get_offers()    
-    await channel.send(message)
+    message = get_offers()
+
+    f = open(FILE_NAME, 'r')
+    fContent = f.read()
+    f.close();
+    
+    if (message != fContent):
+        f = open(FILE_NAME, 'w')
+        f.write(message)
+        f.close()
+
+        #await channel.send(message)
+
     os._exit(os.EX_OK)
 
 client.run(TOKEN)
