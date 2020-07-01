@@ -80,7 +80,7 @@ async def on_ready():
     if (has_changes(message)):
         print('New Offers!')
         write_changes(message)
-        #await channel.send(message)
+        await channel.send(message)
 
     os._exit(os.EX_OK)
 
