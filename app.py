@@ -57,6 +57,17 @@ def build_message(title, newPrice, oldPrice, link):
     message = message + '\n\n'
     return message
 
+def has_changes(currentOffers):
+    f = open(FILE_NAME, 'r')
+    fContent = f.read()
+    f.close();
+
+    return currentOffers != fContent
+
+def write_changes(currentOffers):
+    f = open(FILE_NAME, 'w')
+    f.write(currentOffers)
+    f.close()
 
 @client.event
 async def on_ready():
@@ -65,16 +76,10 @@ async def on_ready():
     guild = discord.utils.get(client.guilds, name=GUILD)    
     channel = guild.get_channel(CHANNEL)
     message = get_offers()
-
-    f = open(FILE_NAME, 'r')
-    fContent = f.read()
-    f.close();
-    
-    if (message != fContent):
-        f = open(FILE_NAME, 'w')
-        f.write(message)
-        f.close()
-
+   
+    if (has_changes(message)):
+        print('New Offers!')
+        write_changes(message)
         #await channel.send(message)
 
     os._exit(os.EX_OK)
