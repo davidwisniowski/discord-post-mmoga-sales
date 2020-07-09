@@ -185,3 +185,6 @@ dmypy.json
 cython_debug/
 
 bin
+
+offers.txt
+
